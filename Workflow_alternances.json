@@ -1,0 +1,159 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Assistant candidatures alternance",
+        "formDescription": "Analyse d'offre d'emploi",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Nom de l'entreprise",
+              "fieldName": "nom_entreprise"
+            },
+            {
+              "fieldLabel": "Intitulé du poste",
+              "fieldName": "intitutle_poste"
+            },
+            {
+              "fieldLabel": "Description de l'offre",
+              "fieldType": "textarea",
+              "fieldName": "description_offre"
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {
+          "respondWithOptions": {
+            "values": {
+              "formSubmittedText": "={{ $json.text }}"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.6,
+      "position": [
+        0,
+        0
+      ],
+      "id": "6bf157bf-73e6-48ba-8864-8f890db914fa",
+      "name": "On form submission",
+      "webhookId": "d1eca5d3-4252-4af1-9f39-441981acf6e6"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Tu es un expert en recrutement et un coach de carrière.\nRédige un e-mail de candidature ultra-personnalisé et percutant pour une offre d'alternance.\n\n--- MON PROFIL ---\n- Formation : Sciences Cognitives (forte compréhension des usages, de l'humain et de l'ergonomie cognitive).\n- Compétences en cours de renforcement : Python, Data Science, SQL, Power BI, UX/UI, n8n, IA.\n- Objectif : Apporter une double compétence unique (Sciences Cognitives + Tech/Data/IA) à l'entreprise.\n\n--- L'OFFRE D'EMPLOI ---\n- Entreprise : {{ $json.nom_entreprise }}\n- Poste : {{ $json.intitule_poste }}\n- Description de l'offre : {{ $json.description_offre }}\n\n--- INSTRUCTIONS ---\n1. Rédige un e-mail de motivation concis, professionnel mais enthousiaste (3-4 paragraphes max).\n2. Mets en avant le lien naturel entre mes études en Sciences Cognitives et le besoin spécifique décrit dans l'offre.\n3. Termine en isolant 3 points clés (\"Pourquoi mon profil est une opportunité pour vous\") sous forme de puces bullet points.",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        192,
+        0
+      ],
+      "id": "13ca1b99-0e6e-4234-a9d1-79a365fb8791",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "claude-opus-5",
+          "mode": "list",
+          "cachedResultName": "Claude Opus 5"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
+      "typeVersion": 1.5,
+      "position": [
+        240,
+        160
+      ],
+      "id": "fe897221-997e-41d4-8ff0-f5235d2265d4",
+      "name": "Anthropic Chat Model",
+      "credentials": {
+        "anthropicApi": {
+          "id": "PUGWGcoFxsUOqzon",
+          "name": "Anthropic account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "from": "onboarding@resend.dev",
+        "to": "cybercreatif@gmail.com",
+        "subject": "Candidature Alternance",
+        "emailFormat": "text",
+        "text": "={{ $json.text }}",
+        "additionalOptions": {}
+      },
+      "type": "n8n-nodes-resend.resend",
+      "typeVersion": 1,
+      "position": [
+        496,
+        0
+      ],
+      "id": "785a54e8-62a2-4732-8cd0-d3a8c65e40d2",
+      "name": "Send a new email",
+      "webhookId": "408b6a29-5f31-419c-8a96-b2600627fe92",
+      "credentials": {
+        "resendOAuth2Api": {
+          "id": "0gvQqLucu45X9u6C",
+          "name": "Resend account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Anthropic Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Send a new email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "8bd8c9fb-d9a0-4c8e-b8bc-f5c702bf06e9",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a5f884f3ebff47f0a7565c28220971ced7b38a82e9bc2d1e6fa329ef5d3def7c"
+  },
+  "nodeGroups": [],
+  "id": "Kui63KR4EkAbMrhi",
+  "tags": []
+}
