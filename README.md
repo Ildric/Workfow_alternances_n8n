@@ -15,7 +15,7 @@ L'objectif de cette première version est d'avoir une brique fonctionnelle de ba
 
 ---
 
-## 📈 Évolutions prévues (Roadmap)
+## Évolutions prévues (Roadmap)
 - [ ] Connecter une base de données (SQL ou Google Sheets) pour stocker les candidatures.
 - [ ] Créer une interface d'affichage / dashboard pour visualiser l'état des candidatures.
 - [ ] Ajouter une analyse automatique de la fiche de poste (parsing/IA).
