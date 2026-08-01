@@ -1,0 +1,8 @@
+candidatures.db
+cv_structure.json
+.env
+
+.DS_Store
+Thumbs.db
+
+node_modules/
