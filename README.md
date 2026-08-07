@@ -14,7 +14,6 @@ Cette V2 vient enrichir la brique fonctionnelle de base posée en V1. L'objectif
 * **Données CV :** fichier `cv_structure.json` local, lu depuis le disque
 * **Envoi email :** Resend
 * **Format d'échange :** JSON
-* **Versionning :** Git / GitHub (branche `v2`)
 
 ---
 
