@@ -60,9 +60,12 @@ Cette V2 vient enrichir la brique fonctionnelle de base posée en V1. L'objectif
 
 ## Versionning
 
-Cette version est maintenue sur la branche `v2`, séparée de la branche `main` (V1), pour permettre une comparaison claire entre les deux itérations :
+Ce projet suit une logique d'itération versionnée via Git :
+
+- **`main`** — Version actuelle (V2) : pipeline complet avec extraction IA (LLM Chain), structuration JSON et stockage en base SQLite.
+- **`v1-mvp`** — Version archivée (V1) : brique de base fonctionnelle (réception + structuration simple), conservée à titre de référence historique.
 
 ```bash
-git checkout main   # V1 — brique de base
-git checkout v2     # V2 — pipeline complet avec IA + stockage
-git diff main v2    # comparer les différences
+git checkout main      # V2 — pipeline complet avec IA + stockage
+git checkout v1-mvp    # V1 — brique de base (archivée)
+git diff v1-mvp main   # comparer les différences entre les deux itérations
